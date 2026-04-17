@@ -26,8 +26,10 @@ source_provider
 the platform you are copying from (like github).
 
 source_token
-source_token
-personal access token. you must enable repository reading scopes. for github we highly recommend using a fine grained personal access token with read only access to your repositories and organizations.
+personal access token. for github we highly recommend using a fine-grained personal access token.
+required scopes for github fine-grained token:
+* `contents`: read-only
+* `metadata`: read-only
 
 source_user
 your username on the origin platform.
@@ -36,7 +38,11 @@ dest_provider
 the target platform (like gitlab).
 
 dest_token
-access token for the target platform registry creation. you must enable api modification scopes. for gitlab a standard personal access token with the api scope checked is the ideal choice.
+access token for the target platform registry creation. for gitlab a standard personal access token is required.
+required scopes for gitlab token:
+* `api`: complete read/write access to the api (required to create missing repositories)
+* `read_repository`: read access to repositories
+* `write_repository`: write access to repositories via git-over-http
 
 dest_user
 the target destination username.
