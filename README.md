@@ -26,7 +26,7 @@ source_provider
 the platform you are copying from (like github).
 
 source_token
-personal access token with repository reading scopes.
+personal access token. you must enable repository reading scopes. for github check the repo and read org scopes.
 
 source_user
 your username on the origin platform.
@@ -35,7 +35,7 @@ dest_provider
 the target platform (like gitlab).
 
 dest_token
-access token for the target platform registry creation.
+access token for the target platform registry creation. you must enable api modification scopes. for gitlab check the api permission checkbox.
 
 dest_user
 the target destination username.
