@@ -1,0 +1,11 @@
+services:
+  gitflect:
+    build: .
+    image: gitflect:latest
+    restart: unless-stopped
+    env_file: .env
+    # Setting a container name makes it easier to manage locally
+    container_name: gitflect
+    volumes:
+      # Example mapping to persist logs externally if desired
+      - ./logs:/var/log/gitflect
