@@ -2,11 +2,13 @@ FROM golang:1.22-alpine AS builder
 
 WORKDIR /app
 
-# Enable caching for go mod downloads
-COPY go.mod go.sum* ./
+# Copy all source files
+COPY . .
+
+# Since we don't have a local go.sum, we run go mod tidy inside the container
+RUN go mod tidy
 RUN go mod download
 
-COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -o gitflect .
 
 FROM alpine:3.19
