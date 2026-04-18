@@ -26,13 +26,15 @@ func Mirror(cloneURL, pushURL, repoName string, secrets []string) error {
 	// Executed silently because if the repo does not use LFS, it shouldn't be a fatal error.
 	_ = runRedacted(secrets, workDir, "git", "lfs", "fetch", "--all")
 
-	// 3. Push --mirror to destination
+	// 3. Push LFS first!
+	// We must push LFS objects before pushing the mirror itself,
+	// because GitLab will reject the git push if commits reference missing LFS blocks.
+	_ = runRedacted(secrets, workDir, "git", "lfs", "push", "--all", pushURL)
+
+	// 4. Push --mirror to destination (commits and refs)
 	if err := runRedacted(secrets, workDir, "git", "push", "--mirror", pushURL); err != nil {
 		return fmt.Errorf("git push mirror error: %w", err)
 	}
-
-	// 4. Push LFS (if it fails, we don't return a hard error since many repos lack LFS)
-	_ = runRedacted(secrets, workDir, "git", "lfs", "push", "--all", pushURL)
 
 	return nil
 }
